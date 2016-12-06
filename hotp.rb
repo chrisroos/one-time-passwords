@@ -51,6 +51,10 @@ class Hotp
     p ['dee', dee]
     dee
   end
+
+  def key_to_hex(key)
+    "0x" + key.chars.map { |chr| chr.ord.to_s(16) }.join
+  end
 end
 
 require 'test/unit'
@@ -60,4 +64,11 @@ class HotpTest < Test::Unit::TestCase
     hmac = "\x1f\x86\x98\x69\x0e\x02\xca\x16\x61\x85\x50\xef\x7f\x19\xda\x8e\x94\x5b\x55\x5a"
     assert_equal 872921, Hotp.new.hotp(hmac, 6)
   end
+
+  def test_should_convert_secret_to_hex
+    key = '12345678901234567890'
+    expected_hex_key = '0x3132333435363738393031323334353637383930'
+    assert_equal expected_hex_key, Hotp.new.key_to_hex(key)
+  end
+
 end
