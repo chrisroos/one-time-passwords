@@ -53,7 +53,7 @@ class Hotp
   end
 
   def key_to_hex(key)
-    "0x" + key.chars.map { |chr| chr.ord.to_s(16) }.join
+    key.chars.map { |chr| '\x' + chr.ord.to_s(16) }.join
   end
 
   def counter_to_hex(counter)
@@ -74,7 +74,7 @@ class HotpTest < Test::Unit::TestCase
 
   def test_should_convert_secret_to_hex
     key = '12345678901234567890'
-    expected_hex_key = '0x3132333435363738393031323334353637383930'
+    expected_hex_key = '\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30'
     assert_equal expected_hex_key, Hotp.new.key_to_hex(key)
   end
 
