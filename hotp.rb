@@ -55,6 +55,13 @@ class Hotp
   def key_to_hex(key)
     "0x" + key.chars.map { |chr| chr.ord.to_s(16) }.join
   end
+
+  def counter_to_hex(counter)
+    hex = counter.to_s(16)
+    padded_to_8_bytes = hex.rjust(16, '0')
+    bytes = padded_to_8_bytes.scan(/\d\d/)
+    bytes.map { |hex_byte| '\x' + hex_byte }.join
+  end
 end
 
 require 'test/unit'
@@ -69,6 +76,12 @@ class HotpTest < Test::Unit::TestCase
     key = '12345678901234567890'
     expected_hex_key = '0x3132333435363738393031323334353637383930'
     assert_equal expected_hex_key, Hotp.new.key_to_hex(key)
+  end
+
+  def test_should_convert_counter_to_8_byte_hex_string
+    counter = 0
+    expected_hex_string = '\x00\x00\x00\x00\x00\x00\x00\x00'
+    assert_equal expected_hex_string, Hotp.new.counter_to_hex(counter)
   end
 
 end
