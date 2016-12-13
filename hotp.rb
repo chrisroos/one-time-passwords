@@ -105,4 +105,25 @@ class HotpTest < Test::Unit::TestCase
     end
   end
 
+  def test_compare_int_to_bytestring_and_array_pack
+    int_to_bytestring = -> (int, padding = 8) do
+      result = []
+      until int == 0
+        result << (int & 0xFF).chr
+        int >>=  8
+      end
+      result.reverse.join.rjust(padding, 0.chr)
+    end
+
+    largest_64_bit_unsigned_integer = 2 ** 64
+    10.times do
+      random_integer = rand(largest_64_bit_unsigned_integer)
+
+      bytestring_from_method = int_to_bytestring.call(random_integer)
+      bytestring_from_array_pack = [random_integer].pack('Q>')
+
+      assert_equal bytestring_from_method, bytestring_from_array_pack
+    end
+  end
+
 end
