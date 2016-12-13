@@ -37,7 +37,7 @@ class Hotp
 
   def hmac(key, counter)
     digest = OpenSSL::Digest.new('sha1')
-    hmac = OpenSSL::HMAC.digest(digest, key, counter.to_s)
+    hmac = OpenSSL::HMAC.hexdigest(digest, key, counter_to_hex(counter))
   end
 
   def hotp(hmac, digits)
@@ -83,7 +83,7 @@ class HotpTest < Test::Unit::TestCase
 
   def test_should_match_hmacs_from_test_data_in_rfc_4226
     key = "12345678901234567890"
-    digest = OpenSSL::Digest.new('sha1')
+    hotp = Hotp.new
     [
       [0, 'cc93cf18508d94934c64b65d8ba7667fb7cde4b0'],
       [1, '75a48a19d4cbe100644e8ac1397eea747a2d33ab'],
@@ -96,8 +96,7 @@ class HotpTest < Test::Unit::TestCase
       [8, '1b3c89f65e6c9e883012052823443f048b4332db'],
       [9, '1637409809a679dc698207310c8c7fc07290d9e5']
     ].each do |(counter, expected_hmac)|
-      counter_as_64bit_unsigned_int = [counter].pack('Q>')
-      hmac = OpenSSL::HMAC.hexdigest(digest, key, counter_as_64bit_unsigned_int)
+      hmac = hotp.hmac(key, counter)
       assert_equal expected_hmac, hmac
     end
   end
