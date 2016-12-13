@@ -57,10 +57,7 @@ class Hotp
   end
 
   def counter_to_hex(counter)
-    hex = counter.to_s(16)
-    padded_to_8_bytes = hex.rjust(16, '0')
-    bytes = padded_to_8_bytes.scan(/\d\d/)
-    bytes.map { |hex_byte| '\x' + hex_byte }.join
+    [counter].pack('Q>')
   end
 end
 
@@ -80,7 +77,7 @@ class HotpTest < Test::Unit::TestCase
 
   def test_should_convert_counter_to_8_byte_hex_string
     counter = 0
-    expected_hex_string = '\x00\x00\x00\x00\x00\x00\x00\x00'
+    expected_hex_string = "\x00\x00\x00\x00\x00\x00\x00\x00"
     assert_equal expected_hex_string, Hotp.new.counter_to_hex(counter)
   end
 
