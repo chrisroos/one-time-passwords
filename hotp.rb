@@ -25,11 +25,14 @@ class Hotp
 
     # Offset = StToNum(OffsetBits) // 0 <= OffSet <= 15
     offset = offset_bits.to_i(2)
-    p ['offset', offset]
-
+    p ['offset byte', offset]
     # Let P = String[OffSet]...String[OffSet+3]
-    pee = string[offset..offset + 3]
+    pee_bytes = string.bytes[offset..offset + 3]
+    p ['pee_bytes', pee_bytes]
+    pee = pee_bytes.pack('CCCC')
+    p ['offset range', "#{offset}..#{offset + 3}"]
     p ['pee', pee]
+    p ['pee as hex', pee.unpack('H*')]
     bytes_in_pee = pee.bytes.length
     p ['bytes_in_pee', bytes_in_pee]
 
