@@ -3,6 +3,9 @@ require 'openssl'
 class Hotp
   # string = 20 byte binary string
   def dynamic_truncation(string)
+    p ['string', string]
+    p ['string as hex', string.unpack('H*')]
+
     bytes_in_string = string.bytes.length
     p ['bytes_in_string', bytes_in_string] # RFC says this should be 20 bytes
 
