@@ -44,6 +44,11 @@ class Hotp
     sbits = dynamic_truncation(hmac)
     p ['sbits', sbits]
 
+    p ['sbits.length', sbits.length]
+    unless sbits.length == 31
+      raise "Incorrect string size. Should be 31 bits but is #{sbits.length}"
+    end
+
     snum = sbits.to_i(2)
     p ['snum', snum]
     p ['snum as hex', snum.to_s(16)]
