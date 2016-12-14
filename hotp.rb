@@ -82,6 +82,10 @@ class HotpTest < Test::Unit::TestCase
     assert_equal expected_hex_string, Hotp.new.counter_to_hex(counter)
   end
 
+end
+
+class UsingRfc4226TestValuesTest < Test::Unit::TestCase
+
   def test_should_match_hmacs_from_test_data_in_rfc_4226
     key = "12345678901234567890"
     hotp = Hotp.new
