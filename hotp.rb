@@ -121,6 +121,10 @@ class HotpTest < Test::Unit::TestCase
     end
   end
 
+end
+
+class ArrayPackTest < Test::Unit::TestCase
+
   def test_compare_int_to_bytestring_and_array_pack
     int_to_bytestring = -> (int, padding = 8) do
       result = []
