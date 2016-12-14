@@ -25,17 +25,10 @@ class Hotp
 
     # Let OffsetBits be the low-order 4 bits of String[19]
     last_byte = string.bytes.last
-    log 'last_byte', last_byte
-    last_byte_as_hex = last_byte.to_s(16)
-    log 'last_byte_as_hex', last_byte_as_hex
-    last_byte_as_binary = last_byte.to_s(2).rjust(8, '0')
-    log 'last_byte_as_binary', last_byte_as_binary
-    least_significant_4_bits = last_byte_as_binary[4..7]
-    offset_bits = least_significant_4_bits
-    log 'offset_bits', offset_bits
+    least_significant_4_bits = last_byte & 0x0f
+    offset = least_significant_4_bits
 
     # Offset = StToNum(OffsetBits) // 0 <= OffSet <= 15
-    offset = offset_bits.to_i(2)
     log 'offset byte', offset
     # Let P = String[OffSet]...String[OffSet+3]
     pee_bytes = string.bytes[offset..offset + 3]
