@@ -86,24 +86,59 @@ end
 
 class UsingRfc4226TestValuesTest < Test::Unit::TestCase
 
-  def test_should_match_hmacs_from_test_data_in_rfc_4226
-    key = "12345678901234567890"
-    hotp = Hotp.new
-    [
-      [0, 'cc93cf18508d94934c64b65d8ba7667fb7cde4b0'],
-      [1, '75a48a19d4cbe100644e8ac1397eea747a2d33ab'],
-      [2, '0bacb7fa082fef30782211938bc1c5e70416ff44'],
-      [3, '66c28227d03a2d5529262ff016a1e6ef76557ece'],
-      [4, 'a904c900a64b35909874b33e61c5938a8e15ed1c'],
-      [5, 'a37e783d7b7233c083d4f62926c7a25f238d0316'],
-      [6, 'bc9cd28561042c83f219324d3c607256c03272ae'],
-      [7, 'a4fb960c0bc06e1eabb804e5b397cdc4b45596fa'],
-      [8, '1b3c89f65e6c9e883012052823443f048b4332db'],
-      [9, '1637409809a679dc698207310c8c7fc07290d9e5']
-    ].each do |(counter, expected_hmac)|
-      hmac = hotp.hmac(key, counter)
-      assert_equal expected_hmac, hmac
-    end
+  def setup
+    @key = '12345678901234567890'
+    @hotp = Hotp.new
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_0
+    hmac = @hotp.hmac(@key, counter = 0)
+    assert_equal 'cc93cf18508d94934c64b65d8ba7667fb7cde4b0', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_1
+    hmac = @hotp.hmac(@key, counter = 1)
+    assert_equal '75a48a19d4cbe100644e8ac1397eea747a2d33ab', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_2
+    hmac = @hotp.hmac(@key, counter = 2)
+    assert_equal '0bacb7fa082fef30782211938bc1c5e70416ff44', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_3
+    hmac = @hotp.hmac(@key, counter = 3)
+    assert_equal '66c28227d03a2d5529262ff016a1e6ef76557ece', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_4
+    hmac = @hotp.hmac(@key, counter = 4)
+    assert_equal 'a904c900a64b35909874b33e61c5938a8e15ed1c', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_5
+    hmac = @hotp.hmac(@key, counter = 5)
+    assert_equal 'a37e783d7b7233c083d4f62926c7a25f238d0316', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_6
+    hmac = @hotp.hmac(@key, counter = 6)
+    assert_equal 'bc9cd28561042c83f219324d3c607256c03272ae', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_7
+    hmac = @hotp.hmac(@key, counter = 7)
+    assert_equal 'a4fb960c0bc06e1eabb804e5b397cdc4b45596fa', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_8
+    hmac = @hotp.hmac(@key, counter = 8)
+    assert_equal '1b3c89f65e6c9e883012052823443f048b4332db', hmac
+  end
+
+  def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_9
+    hmac = @hotp.hmac(@key, counter = 9)
+    assert_equal '1637409809a679dc698207310c8c7fc07290d9e5', hmac
   end
 
   def test_should_match_hotps_from_test_data_in_rfc_4226
