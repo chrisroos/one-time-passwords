@@ -46,6 +46,7 @@ class Hotp
 
     snum = sbits.to_i(2)
     p ['snum', snum]
+    p ['snum as hex', snum.to_s(16)]
 
     dee = snum.modulo(10 ** digits)
     p ['dee', dee]
