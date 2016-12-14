@@ -74,10 +74,6 @@ class Hotp
     dee
   end
 
-  def key_to_hex(key)
-    key.chars.map { |chr| '\x' + chr.ord.to_s(16) }.join
-  end
-
   def counter_to_hex(counter)
     [counter].pack('Q>')
   end

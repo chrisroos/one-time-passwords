@@ -7,12 +7,6 @@ class HotpTest < Test::Unit::TestCase
     assert_equal 872921, Hotp.new.hotp(hmac, 6)
   end
 
-  def test_should_convert_secret_to_hex
-    key = '12345678901234567890'
-    expected_hex_key = '\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30'
-    assert_equal expected_hex_key, Hotp.new.key_to_hex(key)
-  end
-
   def test_should_convert_counter_to_8_byte_hex_string
     counter = 0
     expected_hex_string = "\x00\x00\x00\x00\x00\x00\x00\x00"
