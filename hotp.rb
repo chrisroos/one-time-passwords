@@ -6,6 +6,10 @@ class Hotp
     bytes_in_string = string.bytes.length
     p ['bytes_in_string', bytes_in_string] # RFC says this should be 20 bytes
 
+    unless bytes_in_string == 20
+      raise "Incorrect string size. Should be 20 bytes but is #{bytes_in_string}."
+    end
+
     # Let OffsetBits be the low-order 4 bits of String[19]
     last_byte = string.bytes.last
     p ['last_byte', last_byte]
