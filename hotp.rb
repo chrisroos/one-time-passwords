@@ -141,23 +141,74 @@ class UsingRfc4226TestValuesTest < Test::Unit::TestCase
     assert_equal '1637409809a679dc698207310c8c7fc07290d9e5', hmac
   end
 
-  def test_should_match_hotps_from_test_data_in_rfc_4226
-    hotp = Hotp.new
-    [
-      ["\xcc\x93\xcf\x18\x50\x8d\x94\x93\x4c\x64\xb6\x5d\x8b\xa7\x66\x7f\xb7\xcd\xe4\xb0", 755224],
-      ["\x75\xa4\x8a\x19\xd4\xcb\xe1\x00\x64\x4e\x8a\xc1\x39\x7e\xea\x74\x7a\x2d\x33\xab", 287082],
-      ["\x0b\xac\xb7\xfa\x08\x2f\xef\x30\x78\x22\x11\x93\x8b\xc1\xc5\xe7\x04\x16\xff\x44", 359152],
-      ["\x66\xc2\x82\x27\xd0\x3a\x2d\x55\x29\x26\x2f\xf0\x16\xa1\xe6\xef\x76\x55\x7e\xce", 969429],
-      ["\xa9\x04\xc9\x00\xa6\x4b\x35\x90\x98\x74\xb3\x3e\x61\xc5\x93\x8a\x8e\x15\xed\x1c", 338314],
-      ["\xa3\x7e\x78\x3d\x7b\x72\x33\xc0\x83\xd4\xf6\x29\x26\xc7\xa2\x5f\x23\x8d\x03\x16", 254676],
-      ["\xbc\x9c\xd2\x85\x61\x04\x2c\x83\xf2\x19\x32\x4d\x3c\x60\x72\x56\xc0\x32\x72\xae", 287922],
-      ["\xa4\xfb\x96\x0c\x0b\xc0\x6e\x1e\xab\xb8\x04\xe5\xb3\x97\xcd\xc4\xb4\x55\x96\xfa", 162583],
-      ["\x1b\x3c\x89\xf6\x5e\x6c\x9e\x88\x30\x12\x05\x28\x23\x44\x3f\x04\x8b\x43\x32\xdb", 399871],
-      ["\x16\x37\x40\x98\x09\xa6\x79\xdc\x69\x82\x07\x31\x0c\x8c\x7f\xc0\x72\x90\xd9\xe5", 520489]
-    ].each do |(hmac, expected_hotp)|
-      actual_hotp = hotp.hotp(hmac, digits = 6)
-      assert_equal expected_hotp, actual_hotp
-    end
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_0
+    hmac = "\xcc\x93\xcf\x18\x50\x8d\x94\x93\x4c\x64\xb6\x5d\x8b\xa7\x66\x7f\xb7\xcd\xe4\xb0"
+    expected_hotp = 755224
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_1
+    hmac = "\x75\xa4\x8a\x19\xd4\xcb\xe1\x00\x64\x4e\x8a\xc1\x39\x7e\xea\x74\x7a\x2d\x33\xab"
+    expected_hotp = 287082
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_2
+    hmac = "\x0b\xac\xb7\xfa\x08\x2f\xef\x30\x78\x22\x11\x93\x8b\xc1\xc5\xe7\x04\x16\xff\x44"
+    expected_hotp = 359152
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_3
+    hmac = "\x66\xc2\x82\x27\xd0\x3a\x2d\x55\x29\x26\x2f\xf0\x16\xa1\xe6\xef\x76\x55\x7e\xce"
+    expected_hotp = 969429
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_4
+    hmac = "\xa9\x04\xc9\x00\xa6\x4b\x35\x90\x98\x74\xb3\x3e\x61\xc5\x93\x8a\x8e\x15\xed\x1c"
+    expected_hotp = 338314
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_5
+    hmac = "\xa3\x7e\x78\x3d\x7b\x72\x33\xc0\x83\xd4\xf6\x29\x26\xc7\xa2\x5f\x23\x8d\x03\x16"
+    expected_hotp = 254676
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_6
+    hmac = "\xbc\x9c\xd2\x85\x61\x04\x2c\x83\xf2\x19\x32\x4d\x3c\x60\x72\x56\xc0\x32\x72\xae"
+    expected_hotp = 287922
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_7
+    hmac = "\xa4\xfb\x96\x0c\x0b\xc0\x6e\x1e\xab\xb8\x04\xe5\xb3\x97\xcd\xc4\xb4\x55\x96\xfa"
+    expected_hotp = 162583
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_8
+    hmac = "\x1b\x3c\x89\xf6\x5e\x6c\x9e\x88\x30\x12\x05\x28\x23\x44\x3f\x04\x8b\x43\x32\xdb"
+    expected_hotp = 399871
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
+  end
+
+  def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_9
+    hmac = "\x16\x37\x40\x98\x09\xa6\x79\xdc\x69\x82\x07\x31\x0c\x8c\x7f\xc0\x72\x90\xd9\xe5"
+    expected_hotp = 520489
+    actual_hotp = @hotp.hotp(hmac, digits = 6)
+    assert_equal expected_hotp, actual_hotp
   end
 
 end
