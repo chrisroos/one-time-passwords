@@ -1,5 +1,7 @@
 1. Generating OTPs
 
+  * HOTP - https://www.ietf.org/rfc/rfc4226.txt
+  * TOTP - https://www.ietf.org/rfc/rfc6238.txt
   * Generate HMAC using secret and counter
   * Take least significant nibble of HMAC and use as offset
   * Take 4 bytes from HMAC starting at offset
@@ -10,6 +12,8 @@
 
 2. HOTPs
 
+  * Counter needs to be synchronised between server and client which is problematic.
+
   * Compare result of using oathtool and otp.rb
     * `ruby otp.rb secret-key 123`
     * `ruby -e "puts 'secret-key'.unpack('H*')" | pbcopy`
@@ -19,6 +23,8 @@
     * `ruby -e "puts '<key>'.unpack('H*')"`
 
 3. TOTPs
+
+  * Avoids problem of counter synchronisation by relying on seconds since the epoch.
 
   * Same as HOTP but counter is number of 30 second intervals between the epoch and now.
     * Generate counter: expr `date +%s` / 30
