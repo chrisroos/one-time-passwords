@@ -21,6 +21,23 @@ class HotpTest < Test::Unit::TestCase
 
 end
 
+class EndToEndUsingRfc4226TestValuesTest < Test::Unit::TestCase
+  ExpectedOtps = [
+    755224, 287082, 359152, 969429, 338314,
+    254676, 287922, 162583, 399871, 520489
+  ]
+
+  def setup
+    @key = '12345678901234567890'
+  end
+
+  ExpectedOtps.each.with_index do |expected_otp, counter|
+    define_method "test_should_generate_expected_otp_when_count_is_#{counter}" do
+      assert_equal expected_otp, Hotp.hotp(@key, counter)
+    end
+  end
+end
+
 class UsingRfc4226TestValuesTest < Test::Unit::TestCase
 
   def setup
@@ -30,52 +47,62 @@ class UsingRfc4226TestValuesTest < Test::Unit::TestCase
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_0
     hmac = @hotp.hmac(@key, counter = 0)
-    assert_equal 'cc93cf18508d94934c64b65d8ba7667fb7cde4b0', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal 'cc93cf18508d94934c64b65d8ba7667fb7cde4b0', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_1
     hmac = @hotp.hmac(@key, counter = 1)
-    assert_equal '75a48a19d4cbe100644e8ac1397eea747a2d33ab', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal '75a48a19d4cbe100644e8ac1397eea747a2d33ab', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_2
     hmac = @hotp.hmac(@key, counter = 2)
-    assert_equal '0bacb7fa082fef30782211938bc1c5e70416ff44', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal '0bacb7fa082fef30782211938bc1c5e70416ff44', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_3
     hmac = @hotp.hmac(@key, counter = 3)
-    assert_equal '66c28227d03a2d5529262ff016a1e6ef76557ece', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal '66c28227d03a2d5529262ff016a1e6ef76557ece', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_4
     hmac = @hotp.hmac(@key, counter = 4)
-    assert_equal 'a904c900a64b35909874b33e61c5938a8e15ed1c', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal 'a904c900a64b35909874b33e61c5938a8e15ed1c', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_5
     hmac = @hotp.hmac(@key, counter = 5)
-    assert_equal 'a37e783d7b7233c083d4f62926c7a25f238d0316', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal 'a37e783d7b7233c083d4f62926c7a25f238d0316', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_6
     hmac = @hotp.hmac(@key, counter = 6)
-    assert_equal 'bc9cd28561042c83f219324d3c607256c03272ae', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal 'bc9cd28561042c83f219324d3c607256c03272ae', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_7
     hmac = @hotp.hmac(@key, counter = 7)
-    assert_equal 'a4fb960c0bc06e1eabb804e5b397cdc4b45596fa', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal 'a4fb960c0bc06e1eabb804e5b397cdc4b45596fa', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_8
     hmac = @hotp.hmac(@key, counter = 8)
-    assert_equal '1b3c89f65e6c9e883012052823443f048b4332db', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal '1b3c89f65e6c9e883012052823443f048b4332db', hex_hmac
   end
 
   def test_should_match_hmac_from_test_data_in_rfc_4226_when_count_is_9
     hmac = @hotp.hmac(@key, counter = 9)
-    assert_equal '1637409809a679dc698207310c8c7fc07290d9e5', hmac
+    hex_hmac = hmac.unpack('H*').first
+    assert_equal '1637409809a679dc698207310c8c7fc07290d9e5', hex_hmac
   end
 
   def test_should_match_hotp_from_test_data_in_rfc_4226_when_using_hmac_for_count_0

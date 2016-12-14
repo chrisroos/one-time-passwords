@@ -1,6 +1,12 @@
 require 'openssl'
 
 class Hotp
+  def self.hotp(key, counter)
+    hotp = new
+    hmac = hotp.hmac(key, counter)
+    hotp.hotp(hmac, digits = 6)
+  end
+
   # string = 20 byte binary string
   def dynamic_truncation(string)
     p ['string', string]
@@ -47,7 +53,7 @@ class Hotp
 
   def hmac(key, counter)
     digest = OpenSSL::Digest.new('sha1')
-    hmac = OpenSSL::HMAC.hexdigest(digest, key, counter_to_hex(counter))
+    hmac = OpenSSL::HMAC.digest(digest, key, counter_to_hex(counter))
   end
 
   def hotp(hmac, digits)
