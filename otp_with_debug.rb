@@ -4,9 +4,22 @@ def log(*args)
   p args
 end
 
-counter = 7
-key = '12345678901234567890'
-digits = 6
+def puts_usage_message_and_exit
+  puts "Usage: #{__FILE__} <key> <counter> [digits]"
+  exit 1
+end
+
+# Handle arguments
+unless key = ARGV.shift
+  puts_usage_message_and_exit
+end
+
+unless counter = ARGV.shift
+  puts_usage_message_and_exit
+end
+counter = Integer(counter)
+
+digits = Integer(ARGV.shift) rescue 6
 
 puts '## Encoding counter as 8 byte binary string'
 counter_as_byte_string = [counter].pack('Q>')
