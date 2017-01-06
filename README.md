@@ -1,6 +1,10 @@
+__NOTE.__ The code in this repository is a mess. I used it to help me explore and understand one-time passwords. All of which resulted in the [Understanding one-time passwords blog post](http://gofreerange.com/understanding-one-time-passwords).
+
+---
+
 # One-time passwords
 
-Exploring HOTP and TOTP in Ruby
+Exploring HOTP and TOTP in Ruby.
 
 ## Notes
 
